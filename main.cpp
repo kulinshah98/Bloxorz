@@ -139,43 +139,22 @@ void createFloor ()
 
 /* Render the scene with openGL */
 /* Edit this function according to your assignment */
-void draw (GLFWwindow* window, float x, float y, float w, float h, int doM, int doV, int doP)
+
+void drawSingleObject(VAO * obj, glm::vec3 trans_coord, glm::vec3 rot_coord, float rot_angle)
 {
-  int fbwidth, fbheight;
-  glfwGetFramebufferSize(window, &fbwidth, &fbheight);
-  glViewport((int)(x*fbwidth), (int)(y*fbheight), (int)(w*fbwidth), (int)(h*fbheight));
-
-  // use the loaded shader program
-  // Don't change unless you know what you are doing
-  glUseProgram (programID);
-
-  // Eye - Location of camera. Don't change unless you are sure!!
-  glm::vec3 eye ( 5*cos(camera_rotation_angle*M_PI/180.0f), 0, 5*sin(camera_rotation_angle*M_PI/180.0f) );
+  glm::vec3 eye ( 2, 4, -4);
+  //cout << eye << endl;
   // Target - Where is the camera looking at.  Don't change unless you are sure!!
-  glm::vec3 target (0, 0, 0);
+  glm::vec3 target (2, 0, 0);
   // Up - Up vector defines tilt of camera.  Don't change unless you are sure!!
   glm::vec3 up (0, 1, 0);
 
   // Compute Camera matrix (view)
-  if(doV)
-  {
-    Matrices.view = glm::lookAt(eye, target, up); // Fixed camera for 2D (ortho) in XY plane
-  }
-  else
-  {
-    Matrices.view = glm::mat4(1.0f);
-  }
+  Matrices.view = glm::lookAt(eye, target, up); // Fixed camera for 2D (ortho) in XY plane
 
   // Compute ViewProject matrix as view/camera might not be changed for this frame (basic scenario)
   glm::mat4 VP;
-  if (doP)
-  {
-    VP = Matrices.projection * Matrices.view;
-  }
-  else
-  {
-    VP = Matrices.view;
-  }
+  VP = Matrices.projection * Matrices.view;
 
   // Send our transformation to the currently bound shader, in the "MVP" uniform
   // For each model you render, since the MVP will be different (at least the M part)
@@ -183,57 +162,77 @@ void draw (GLFWwindow* window, float x, float y, float w, float h, int doM, int 
 
   // Load identity to model matrix
   Matrices.model = glm::mat4(1.0f);
+  //printf("%f %f %f\n",trans_coord[0], trans_coord[1], trans_coord[2]);
+  //printf("%d %d %d\n",trans_coord[0], trans_coord[1], trans_coord[2]);
+  glm::mat4 translateRectangle = glm::translate (trans_coord);        // glTranslatef
+  glm::mat4 rotateRectangle = glm::rotate((float )(rot_angle*M_PI/180.0f), rot_coord);
+  glm::mat4 transformRectangle = translateRectangle * rotateRectangle;
+  Matrices.model *= transformRectangle;
 
-  glm::mat4 translateRectangle = glm::translate (rect_pos);        // glTranslatef
-  glm::mat4 rotateRectangle = glm::rotate((float)(rectangle_rotation*M_PI/180.0f), glm::vec3(0,0,1));
-  Matrices.model *= (translateRectangle * rotateRectangle);
-  if(floor_rel)
-  {
-      Matrices.model = Matrices.model * glm::translate(floor_pos);
-  }
-  if(doM)
-  {
-      MVP = VP * Matrices.model;
-  }
-  else
-  {
-      MVP = VP;
-  }
-  glUniformMatrix4fv(Matrices.MatrixID, 1, GL_FALSE, &MVP[0][0]);
-
-  // draw3DObject draws the VAO given to it using current MVP matrix
-  draw3DObject(rectangle);
-
-  // Load identity to model matrix
-  Matrices.model = glm::mat4(1.0f);
-
-  glm::mat4 translateCam = glm::translate(eye);
-  glm::mat4 rotateCam = glm::rotate((float)((90 - camera_rotation_angle)*M_PI/180.0f), glm::vec3(0,1,0));
-  Matrices.model *= (translateCam * rotateCam);
   MVP = VP * Matrices.model;
   glUniformMatrix4fv(Matrices.MatrixID, 1, GL_FALSE, &MVP[0][0]);
-
-  // draw3DObject draws the VAO given to it using current MVP matrix
-  draw3DObject(cam);
-
-  Matrices.model = glm::translate(floor_pos);
-  MVP = VP * Matrices.model;
-  glUniformMatrix4fv(Matrices.MatrixID, 1, GL_FALSE, &MVP[0][0]);
-
-  // draw3DObject draws the VAO given to it using current MVP matrix
-  draw3DObject(floor_vao);
-
+  draw3DObject(obj);
 }
 
+void draw (GLFWwindow* window, float x, float y, float w, float h, int doM, int doV, int doP)
+{
+  int fbwidth, fbheight, i, j;
+  glfwGetFramebufferSize(window, &fbwidth, &fbheight);
+  glViewport((int)(x*fbwidth), (int)(y*fbheight), (int)(w*fbwidth), (int)(h*fbheight));
+
+  // use the loaded shader program
+  // Don't change unless you know what you are doing
+  glUseProgram (programID);
+  for(i=0;i<10;i++)
+  {
+    for(j=0;j<10;j++)
+    {
+      tiles_grid[i][j].drawTiles();
+    }
+  }
+}
+
+
+void createTiles()
+{
+  int arr[][10] = {
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   //1
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   //2
+    0, 0, 0, 1, 0, 0, 0, 0, 0, 0,   //3
+    0, 0, 0, 1, 1, 1, 0, 0, 0, 0,   //4
+    0, 0, 0, 1, 0, 0, 0, 0, 0, 0,   //5
+    0, 0, 0, 0, 1, 1, 0, 0, 0, 0,   //6
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   //7
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   //8
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   //9
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0   //10
+  };
+  int i,j;
+  for(i=0; i<10; i++)
+  {
+    for(j=0; j<10; j++)
+    {
+      tiles_class temp;
+      temp.init(arr[i][j]);
+      temp.createTiles();
+      tiles_grid[i][j] = temp;
+    }
+  }
+  for(i=0;i<10;i++)
+  {
+    for(j=0;j<10;j++)
+    {
+      tiles_grid[i][j].tiles_coord = glm::vec3(i-2, 0, j-2);
+    }
+  }
+}
 
 void initGL (GLFWwindow* window, int width, int height)
 {
     /* Objects should be created before any other gl function and shaders */
 	// Create the models
-	createRectangle ();
-  createCam();
-  createFloor();
-
+	createTiles();
+  createRectangle();
 	// Create and compile our GLSL program from the shaders
 	programID = LoadShaders( "Sample_GL.vert", "Sample_GL.frag" );
 	// Get a handle for our "MVP" uniform
@@ -257,8 +256,8 @@ void initGL (GLFWwindow* window, int width, int height)
 
 int main (int argc, char** argv)
 {
-	int width = 600;
-	int height = 600;
+	int width = 1000;
+	int height = 700;
   rect_pos = glm::vec3(0, 0, 0);
   floor_pos = glm::vec3(0, 0, 0);
   do_rot = 0;
@@ -287,10 +286,10 @@ int main (int argc, char** argv)
           camera_rotation_angle -= 720;
         }
       	last_update_time = current_time;
-      	draw(window, 0, 0, 0.5, 0.5, 1, 1, 1);
-        draw(window, 0.5, 0, 0.5, 0.5, 0, 1, 1);
-      	draw(window, 0, 0.5, 0.5, 0.5, 1, 0, 1);
-      	draw(window, 0.5, 0.5, 0.5, 0.5, 0, 0, 1);
+      	draw(window, 0, 0, 1, 1, 1, 1, 1);
+        //draw(window, 0.5, 0, 0.5, 0.5, 0, 1, 1);
+      	//draw(window, 0, 0.5, 0.5, 0.5, 1, 0, 1);
+      	//draw(window, 0.5, 0.5, 0.5, 0.5, 0, 0, 1);
 
         // Swap Frame Buffer in double buffering
         glfwSwapBuffers(window);

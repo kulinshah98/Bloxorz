@@ -83,7 +83,6 @@ void keyboardChar (GLFWwindow* window, unsigned int key)
      	floor_rel ^= 1;
      	break;
     case ' ':
-      printf("***\n");
      	do_rot ^= 1;
      	break;
 		default:

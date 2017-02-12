@@ -11,10 +11,9 @@
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+
 using namespace std;
 
-
-//variables
 struct VAO {
     GLuint VertexArrayID;
     GLuint VertexBuffer;
@@ -32,9 +31,8 @@ struct GLMatrices {
 	glm::mat4 view;
 	GLuint MatrixID;
 };
-GLMatrices Matrices;
+extern GLMatrices Matrices;
 
-//Classes
 
 #ifndef TILES_H
 #define TILES_H
@@ -54,15 +52,10 @@ public:
 
 #endif
 
-//variables
-GLuint programID;
-int do_rot, floor_rel;
-double last_update_time, current_time;
-glm::vec3 rect_pos, floor_pos;
-float rectangle_rotation = 0;
-double tiles_length = 0.07, tiles_width = 0.07,tiles_height = 0.03;
-float rectangle_rot_dir = 1;
-bool rectangle_rot_status = true;
-VAO *rectangle, *cam, *floor_vao;
-float camera_rotation_angle = 90;
-tiles_class tiles_grid[12][12];
+extern double tiles_width, tiles_length, tiles_height;
+
+
+//functions
+void draw3DObject (struct VAO* vao);
+struct VAO* create3DObject (GLenum primitive_mode, int numVertices, const GLfloat* vertex_buffer_data, const GLfloat* color_buffer_data, GLenum fill_mode);
+void drawSingleObject(VAO * obj, glm::vec3 trans_coord, glm::vec3 rot_coord, float rot_angle);

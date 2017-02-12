@@ -33,6 +33,26 @@ struct GLMatrices {
 };
 extern GLMatrices Matrices;
 
+
+
+#ifndef TILES_H
+#define TILES_H
+
+class tiles_class
+{
+public:
+  int active, color, type;
+  glm::vec3 tiles_coord;
+  VAO * tiles_vao;
+
+public:
+  void init(int tiles_type);
+  void createTiles();
+  void drawTiles();
+};
+
+#endif
+
 extern GLuint programID;
 extern int do_rot, floor_rel;
 extern glm::vec3 rect_pos, floor_pos;
@@ -42,13 +62,14 @@ extern float rectangle_rot_dir,rectangle_rotation;
 extern bool rectangle_rot_status;
 
 extern VAO *rectangle, *cam, *floor_vao;
-
+extern tiles_class tiles_grid[12][12];
 extern float camera_rotation_angle;
 
 //functions
 void createRectangle ();
 void createCam ();
 void createFloor ();
+void drawSingleObject(VAO * obj, glm::vec3 trans_coord, glm::vec3 rot_coord, float rot_angle);
 void draw (GLFWwindow* window, float x, float y, float w, float h, int doM, int doV, int doP);
 void initGL (GLFWwindow* window, int width, int height);
 struct VAO* create3DObject (GLenum primitive_mode, int numVertices, const GLfloat* vertex_buffer_data, const GLfloat* color_buffer_data, GLenum fill_mode);
