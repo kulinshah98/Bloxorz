@@ -34,6 +34,7 @@ void keyboard (GLFWwindow* window, int key, int scancode, int action, int mods)
 /* Executed for character input (like in text boxes) */
 void keyboardChar (GLFWwindow* window, unsigned int key)
 {
+  printf("%c %d %d %d %d\n",key,active_a, active_d, active_w, active_s);
 	switch (key) {
 		case 'Q':
 		case 'q':
@@ -41,49 +42,49 @@ void keyboardChar (GLFWwindow* window, unsigned int key)
          exit(0);
          break;
     case 'a':
-     	rect_pos.x -= 0.1;
+      if(active_d==0 && active_w==0 && active_s==0)
+      {
+        active_a=1;
+        printf("****\n");
+         prev_block_coord=block_obj.block_coord;
+        if(angle==90)
+        {
+          angle=0;
+        }
+      }
      	break;
     case 'd':
-     	rect_pos.x += 0.1;
+      if(active_a==0 && active_w==0 && active_s==0)
+      {
+         prev_block_coord=block_obj.block_coord;
+        active_d=1;
+        if(angle==90)
+        {
+          angle=0;
+        }
+      }
      	break;
     case 'w':
-     	rect_pos.y += 0.1;
+      if(active_d==0 && active_a==0 && active_s==0)
+      {
+         prev_block_coord=block_obj.block_coord;
+        active_w=1;
+        if(angle==90)
+        {
+          angle=0;
+        }
+      }
      	break;
     case 's':
-     	rect_pos.y -= 0.1;
-     	break;
-    case 'r':
-     	rect_pos.z -= 0.1;
-     	break;
-    case 'f':
-     	rect_pos.z += 0.1;
-     	break;
-    case 'e':
-     	rectangle_rotation += 1;
-     	break;
-    case 'j':
-     	floor_pos.x -= 0.1;
-     	break;
-    case 'l':
-     	floor_pos.x += 0.1;
-     	break;
-    case 'i':
-     	floor_pos.y += 0.1;
-     	break;
-    case 'k':
-     	floor_pos.y -= 0.1;
-     	break;
-    case 'y':
-     	floor_pos.z -= 0.1;
-     	break;
-    case 'h':
-     	floor_pos.z += 0.1;
-     	break;
-    case 'g':
-     	floor_rel ^= 1;
-     	break;
-    case ' ':
-     	do_rot ^= 1;
+      if(active_d==0 && active_w==0 && active_a==0)
+      {
+         prev_block_coord=block_obj.block_coord;
+        active_s=1;
+        if(angle==90)
+        {
+          angle=0;
+        }
+      }
      	break;
 		default:
 			break;

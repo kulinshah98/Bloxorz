@@ -53,6 +53,24 @@ public:
 
 #endif
 
+#ifndef BLOCK_H
+#define BLOCK_H
+
+class block_class
+{
+public:
+  int along_x, along_y, along_z;
+  glm::vec3 block_coord;
+  VAO * block_vao;
+
+public:
+  void createBlock();
+  void drawBlock();
+};
+
+#endif
+
+
 extern GLuint programID;
 extern int do_rot, floor_rel;
 extern glm::vec3 rect_pos, floor_pos;
@@ -64,6 +82,9 @@ extern bool rectangle_rot_status;
 extern VAO *rectangle, *cam, *floor_vao;
 extern tiles_class tiles_grid[12][12];
 extern float camera_rotation_angle;
+extern block_class block_obj;
+extern int active_s, active_d, active_w, active_a;
+extern float angle;
 
 //functions
 void createRectangle ();
@@ -77,3 +98,4 @@ void draw3DObject (struct VAO* vao);
 GLFWwindow* initGLFW (int width, int height);
 GLuint LoadShaders(const char * vertex_file_path,const char * fragment_file_path);
 void reshapeWindow (GLFWwindow* window, int width, int height);
+void drawBlockObject(VAO * obj, glm::vec3 trans_coord1, int axis, glm::vec3 trans_coord2, glm::vec3 rot_coord, float rot_angle);

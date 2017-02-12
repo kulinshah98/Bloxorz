@@ -1,8 +1,8 @@
 CC=g++
 all: mygame
 FLAGS= -lGL -lglfw -ldl
-mygame: main.o controls.o glad.o not_useful.o variables.o tiles.o
-	$(CC) -o mygame main.o controls.o glad.o not_useful.o variables.o tiles.o $(FLAGS)
+mygame: main.o controls.o glad.o not_useful.o variables.o tiles.o block.o
+	$(CC) -o mygame main.o controls.o glad.o not_useful.o variables.o tiles.o block.o $(FLAGS)
 
 not_useful.o: not_useful.h not_useful.cpp
 	$(CC) -c not_useful.cpp $(FLAGS)
@@ -15,6 +15,9 @@ controls.o: controls.cpp controls.h
 
 tiles.o: tiles.cpp tiles.h
 	$(CC) -c tiles.cpp $(FLAGS)
+
+block.o: block.cpp block.h
+	$(CC) -c block.cpp $(FLAGS)
 
 glad.o: glad.c
 	gcc -c glad.c $(FLAGS)

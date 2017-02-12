@@ -54,6 +54,23 @@ public:
 
 #endif
 
+#ifndef BLOCK_H
+#define BLOCK_H
+
+class block_class
+{
+public:
+  int along_x, along_y, along_z;
+  glm::vec3 block_coord;
+  VAO * block_vao;
+
+public:
+  void createBlock();
+  void drawBlock();
+};
+
+#endif
+
 //variables
 GLuint programID;
 int do_rot, floor_rel;
@@ -61,8 +78,11 @@ double last_update_time, current_time;
 glm::vec3 rect_pos, floor_pos;
 float rectangle_rotation = 0;
 double tiles_length = 0.07, tiles_width = 0.07,tiles_height = 0.03;
-float rectangle_rot_dir = 1;
+float rectangle_rot_dir = 1, angle;
 bool rectangle_rot_status = true;
 VAO *rectangle, *cam, *floor_vao;
 float camera_rotation_angle = 90;
 tiles_class tiles_grid[12][12];
+block_class block_obj;
+int active_s, active_d, active_w, active_a;
+glm::vec3 prev_block_coord;
