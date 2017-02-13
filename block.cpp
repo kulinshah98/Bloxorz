@@ -100,7 +100,7 @@ void block_class::drawBlock()
   if(active_d==1 && along_y==1)
   {
     rot_axis = glm::vec3(0,0,1);
-    angle+=2;
+    angle+=3;
     if(angle!=90)
     {
       drawBlockObject(block_vao, block_coord, 0, glm::vec3(- 0.5, - 1, 0), rot_axis, angle);
@@ -111,7 +111,7 @@ void block_class::drawBlock()
   else if(active_a==1 && along_y==1)
   {
     rot_axis = glm::vec3(0,0,1);
-    angle-=2;
+    angle-=3;
     if(angle!=-90)
     {
       drawBlockObject(block_vao, block_coord, 0, glm::vec3( 0.5, - 1, 0), rot_axis, angle);
@@ -122,7 +122,7 @@ void block_class::drawBlock()
   else if(active_w==1 && along_y==1)
   {
     rot_axis = glm::vec3(1,0,0);
-    angle+=2;
+    angle+=3;
     if(angle!=90)
     {
       drawBlockObject(block_vao, block_coord, 0, glm::vec3( 0, -1, 0.5), rot_axis, angle);
@@ -133,7 +133,7 @@ void block_class::drawBlock()
   else if(active_s==1 && along_y==1)
   {
     rot_axis = glm::vec3(1,0,0);
-    angle-=2;
+    angle-=3;
     if(angle!=-90)
     {
       drawBlockObject(block_vao, block_coord, 0, glm::vec3( 0, -1, -0.5), rot_axis, angle);
@@ -144,7 +144,7 @@ void block_class::drawBlock()
   if(active_a==1 && along_x==1)
   {
     rot_axis = glm::vec3(0,0,1);
-    angle-=2;
+    angle-=3;
     if(angle!=-90)
     {
       drawBlockObject(block_vao, glm::vec3(block_coord[1], -block_coord[0], block_coord[2]), 1, glm::vec3( -0.5, -1, 0), rot_axis, angle);
@@ -155,7 +155,7 @@ void block_class::drawBlock()
   else if(active_d==1 && along_x==1)
   {
     rot_axis = glm::vec3(0,0,1);
-    angle+=2;
+    angle+=3;
     if(angle!=90)
     {
       drawBlockObject(block_vao, glm::vec3(block_coord[1], -block_coord[0], block_coord[2]), 1, glm::vec3( -0.5, 1, 0), rot_axis, angle);
@@ -166,7 +166,7 @@ void block_class::drawBlock()
   else if(active_w==1 && along_x==1)
   {
     rot_axis = glm::vec3(0,1,0);
-    angle-=2;
+    angle-=3;
     if(angle!=-90)
     {
       drawBlockObject(block_vao, glm::vec3(block_coord[1], -block_coord[0], block_coord[2]), 1, glm::vec3( -0.5, 0, 0.5), rot_axis, angle);
@@ -177,7 +177,7 @@ void block_class::drawBlock()
   else if(active_s==1 && along_x==1)
   {
     rot_axis = glm::vec3(0,1,0);
-    angle+=2;
+    angle+=3;
     if(angle!=90)
     {
       drawBlockObject(block_vao, glm::vec3(block_coord[1], -block_coord[0], block_coord[2]), 1, glm::vec3( -0.5, 0, -0.5), rot_axis, angle);
@@ -188,7 +188,7 @@ void block_class::drawBlock()
   else if(active_a==1 && along_z==1)
   {
     rot_axis = glm::vec3(0,1,0);
-    angle-=2;
+    angle-=3;
     if(angle!=-90)
     {
       drawBlockObject(block_vao, glm::vec3(block_coord[0], block_coord[2], -block_coord[1]), 2, glm::vec3( 0.5,0, 0.5), rot_axis, angle);
@@ -199,7 +199,7 @@ void block_class::drawBlock()
   else if(active_d==1 && along_z==1)
   {
     rot_axis = glm::vec3(0,1,0);
-    angle+=2;
+    angle+=3;
     if(angle!=90)
     {
       drawBlockObject(block_vao, glm::vec3(block_coord[0], block_coord[2], -block_coord[1]), 2, glm::vec3( -0.5,0, 0.5), rot_axis, angle);
@@ -210,7 +210,7 @@ void block_class::drawBlock()
   else if(active_w==1 && along_z==1)
   {
     rot_axis = glm::vec3(1,0,0);
-    angle+=2;
+    angle+=3;
     if(angle!=90)
     {
       drawBlockObject(block_vao, glm::vec3(block_coord[0], block_coord[2], -block_coord[1]), 2, glm::vec3( 0,1, 0.5), rot_axis, angle);
@@ -221,7 +221,7 @@ void block_class::drawBlock()
   else if(active_s==1 && along_z==1)
   {
     rot_axis = glm::vec3(1,0,0);
-    angle-=2;
+    angle-=3;
     if(angle!=-90)
     {
       drawBlockObject(block_vao, glm::vec3(block_coord[0], block_coord[2], -block_coord[1]), 2, glm::vec3( 0,-1, 0.5), rot_axis, angle);

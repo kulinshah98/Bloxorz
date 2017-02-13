@@ -7,11 +7,13 @@
 
 void drawSingleObject(VAO * obj, glm::vec3 trans_coord, glm::vec3 rot_coord, float rot_angle)
 {
-  glm::vec3 eye ( 2, 4, -4);
+  //glm::vec3 eye ( 2, 4, -4);
   //cout << eye << endl;
   // Target - Where is the camera looking at.  Don't change unless you are sure!!
-  glm::vec3 target (2, 0, 0);
+  //glm::vec3 target (2, 0, 0);
   // Up - Up vector defines tilt of camera.  Don't change unless you are sure!!
+//  cout << target[0] << " " << target[1] << " " << target[2] << " " << eye[0] << " " << " " << eye[1] << " " << " " << eye[2] << endl;
+setEyeTarget();
   glm::vec3 up (0, 1, 0);
 
   // Compute Camera matrix (view)
@@ -41,12 +43,14 @@ void drawSingleObject(VAO * obj, glm::vec3 trans_coord, glm::vec3 rot_coord, flo
 
 void drawBlockObject(VAO * obj, glm::vec3 trans_coord1, int axis, glm::vec3 trans_coord2, glm::vec3 rot_coord, float rot_angle)
 {
-  glm::vec3 eye ( 2, 4, -4);
+  //glm::vec3 eye ( 2, 4, -4);
   //cout << eye << endl;
   // Target - Where is the camera looking at.  Don't change unless you are sure!!
-  glm::vec3 target (2, 0, 0);
+  //glm::vec3 target (2, 0, 0);
   // Up - Up vector defines tilt of camera.  Don't change unless you are sure!!
+  setEyeTarget();
   glm::vec3 up (0, 1, 0);
+//  cout << target[0] << " " << target[1] << " " << target[2] << " " << eye[0] << " " << " " << eye[1] << " " << " " << eye[2] << endl;
 
   // Compute Camera matrix (view)
   Matrices.view = glm::lookAt(eye, target, up); // Fixed camera for 2D (ortho) in XY plane
@@ -88,7 +92,7 @@ void checkBlockPosition()
 {
   float block_x = block_obj.block_coord[0]+2;
   float block_y = block_obj.block_coord[2]+2;
-  cout << block_x  << " " << block_y << endl;
+//  cout << block_x  << " " << block_y << endl;
   //cout << block_obj.block_coord[0] << " " <<  block_obj.block_coord[2] << " " << goal_state.first - 2 << " " << goal_state.second - 2 << endl;
   if(block_obj.along_y==1 && block_obj.block_coord[0]==goal_state.first-2 && block_obj.block_coord[2]==goal_state.second-2)
   {
@@ -109,6 +113,60 @@ void checkBlockPosition()
   {
     printf("Game Over\n");
     exit(0);
+  }
+}
+
+void setEyeTarget()
+{
+  if(view_type==0)
+  {
+    eye = glm::vec3(2,4,-4);
+    target = glm::vec3(2,0,0);
+  }
+  else if(view_type==1)
+  {
+    eye = glm::vec3(2,9,1);
+    target = glm::vec3(2,0,2);
+  }
+  else if(view_type==2)
+  {
+    if(block_obj.along_y==1)
+    {
+      eye = glm::vec3(block_obj.block_coord[0], block_obj.block_coord[1] + 1.3, block_obj.block_coord[2]+0.5);
+      target = glm::vec3(block_obj.block_coord[0], block_obj.block_coord[1] + 1.3, block_obj.block_coord[2]+3);
+    }
+    else if(block_obj.along_x==1)
+    {
+      eye = glm::vec3(block_obj.block_coord[0], block_obj.block_coord[1] + 0.7, block_obj.block_coord[2]+0.5);
+      target = glm::vec3(block_obj.block_coord[0], block_obj.block_coord[1] + 0.7, block_obj.block_coord[2]+3);
+    }
+    else if(block_obj.along_z==1)
+    {
+      eye = glm::vec3(block_obj.block_coord[0] - 0.5, block_obj.block_coord[1] + 0.7, block_obj.block_coord[2]);
+      target = glm::vec3(block_obj.block_coord[0] - 3, block_obj.block_coord[1] + 0.7, block_obj.block_coord[2]);
+    }
+  }
+  else if(view_type==3)
+  {
+    if(block_obj.along_y==1)
+    {
+      eye = glm::vec3(block_obj.block_coord[0], block_obj.block_coord[1] + 2.5, block_obj.block_coord[2]-1);
+      target = glm::vec3(block_obj.block_coord[0], block_obj.block_coord[1] , block_obj.block_coord[2]);
+    }
+    else if(block_obj.along_x==1)
+    {
+      eye = glm::vec3(block_obj.block_coord[0], block_obj.block_coord[1] + 2.2, block_obj.block_coord[2]-1);
+      target = glm::vec3(block_obj.block_coord[0], block_obj.block_coord[1] + 0.7, block_obj.block_coord[2]);
+    }
+    else if(block_obj.along_z==1)
+    {
+      eye = glm::vec3(block_obj.block_coord[0] , block_obj.block_coord[1] + 2.2, block_obj.block_coord[2]);
+      target = glm::vec3(block_obj.block_coord[0], block_obj.block_coord[1] + 0.7, block_obj.block_coord[2]);
+    }
+  }
+  else if(view_type==4)
+  {
+    
   }
 }
 
@@ -199,7 +257,6 @@ int main (int argc, char** argv)
   active_s = active_w = active_a = active_d=0;
   do_rot = 0;
   floor_rel = 1;
-
     GLFWwindow* window = initGLFW(width, height);
 
 	initGL (window, width, height);

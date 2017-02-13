@@ -60,6 +60,9 @@ extern int active_s, active_d, active_w, active_a;
 extern float angle;
 extern block_class block_obj;
 extern glm::vec3 prev_block_coord;
+extern int view_type;
+extern glm::vec3 eye;
+extern glm::vec3 target;
 
 //functions
 void keyboard (GLFWwindow* window, int key, int scancode, int action, int mods);

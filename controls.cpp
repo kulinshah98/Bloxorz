@@ -34,7 +34,7 @@ void keyboard (GLFWwindow* window, int key, int scancode, int action, int mods)
 /* Executed for character input (like in text boxes) */
 void keyboardChar (GLFWwindow* window, unsigned int key)
 {
-  printf("%c %d %d %d %d\n",key,active_a, active_d, active_w, active_s);
+//  printf("%c %d %d %d %d\n",key,active_a, active_d, active_w, active_s);
 	switch (key) {
 		case 'Q':
 		case 'q':
@@ -86,6 +86,53 @@ void keyboardChar (GLFWwindow* window, unsigned int key)
         }
       }
      	break;
+    case 't':
+      //Top View
+      view_type = 1;
+      break;
+    case 'y':
+      //Tower View
+      view_type = 0;
+      break;
+    case 'b':
+      printf("B\n");
+      //Block View
+      view_type = 2;
+      break;
+    case 'f':
+      //Follow Cam view
+      view_type = 3;
+      break;
+    case 'h':
+      //Helicopter View
+      eye = glm::vec3(2,4,-4);
+      target = glm::vec3(2,0,0);
+      view_type = 4;
+      break;
+    case 'i':
+      if(view_type==4)
+      {
+        target[1]+=0.5;
+      }
+      break;
+    case 'j':
+      if(view_type==4)
+      {
+        target[0]+=0.5;
+      }
+      break;
+    case 'k':
+      if(view_type==4)
+      {
+        target[1]-=0.5;
+      }
+      break;
+    case 'l':
+      if(view_type==4)
+      {
+        target[0]-=0.5;
+      }
+      break;
 		default:
 			break;
 	}

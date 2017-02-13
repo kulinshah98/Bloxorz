@@ -87,6 +87,9 @@ extern int active_s, active_d, active_w, active_a;
 extern float angle;
 extern pair<int,int> goal_state;
 extern int arr[10][10];
+extern glm::vec3 eye;
+extern glm::vec3 target;
+extern int view_type;
 
 //functions
 void createRectangle ();
@@ -102,3 +105,4 @@ GLuint LoadShaders(const char * vertex_file_path,const char * fragment_file_path
 void reshapeWindow (GLFWwindow* window, int width, int height);
 void drawBlockObject(VAO * obj, glm::vec3 trans_coord1, int axis, glm::vec3 trans_coord2, glm::vec3 rot_coord, float rot_angle);
 void checkBlockPosition();
+void setEyeTarget();
