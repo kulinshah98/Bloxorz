@@ -85,4 +85,17 @@ float camera_rotation_angle = 90;
 tiles_class tiles_grid[12][12];
 block_class block_obj;
 int active_s, active_d, active_w, active_a;
+pair<int,int> goal_state;
 glm::vec3 prev_block_coord;
+int arr[][10] = {
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   //1
+  0, 0, 1, 0, 0, 0, 0, 0, 0, 0,   //2
+  0, 0, 1, 1, 0, 0, 0, 0, 0, 0,   //3
+  0, 0, 1, 1, 1, 1, 0, 0, 0, 0,   //4
+  0, 0, 1, 1, 0, 1, 0, 0, 0, 0,   //5
+  0, 0, 1, 1, 1, 1, 0, 0, 0, 0,   //6
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   //7
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   //8
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   //9
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 1   //10
+};

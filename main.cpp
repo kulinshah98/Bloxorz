@@ -2,141 +2,6 @@
 
 
 
-// Creates the rectangle object used in this sample code
-void createRectangle ()
-{
-    // GL3 accepts only Triangles. Quads are not supported
-    static const GLfloat vertex_buffer_data [] = {
-	-0.5, 0.5, 0.5,
-	-0.5, -0.5, 0.5,
-	0.5, -0.5, 0.5,
-	-0.5, 0.5, 0.5,
-	0.5, -0.5, 0.5,
-	0.5, 0.5, 0.5,
-	0.5, 0.5, 0.5,
-	0.5, -0.5, 0.5,
-	0.5, -0.5, -0.5,
-	0.5, 0.5, 0.5,
-	0.5, -0.5, -0.5,
-	0.5, 0.5, -0.5,
-	0.5, 0.5, -0.5,
-	0.5, -0.5, -0.5,
-	-0.5, -0.5, -0.5,
-	0.5, 0.5, -0.5,
-	-0.5, -0.5, -0.5,
-	-0.5, 0.5, -0.5,
-	-0.5, 0.5, -0.5,
-	-0.5, -0.5, -0.5,
-	-0.5, -0.5, 0.5,
-	-0.5, 0.5, -0.5,
-	-0.5, -0.5, 0.5,
-	-0.5, 0.5, 0.5,
-	-0.5, 0.5, -0.5,
-	-0.5, 0.5, 0.5,
-	0.5, 0.5, 0.5,
-	-0.5, 0.5, -0.5,
-	0.5, 0.5, 0.5,
-	0.5, 0.5, -0.5,
-	-0.5, -0.5, 0.5,
-	-0.5, -0.5, -0.5,
-	0.5, -0.5, -0.5,
-	-0.5, -0.5, 0.5,
-	0.5, -0.5, -0.5,
-	0.5, -0.5, 0.5,
-	-0.5, 0.5, 0.5,
-	0.5, 0.5, -0.5,
-	0.5, 0.75, -0.5,
-    };
-
-    static const GLfloat color_buffer_data [] = {
-	1.0f, 1.0f, 0.0f,
-	1.0f, 1.0f, 0.0f,
-	1.0f, 1.0f, 0.0f,
-	1.0f, 1.0f, 0.0f,
-	1.0f, 1.0f, 0.0f,
-	1.0f, 1.0f, 0.0f,
-	1.0f, 0.0f, 1.0f,
-	1.0f, 0.0f, 1.0f,
-	1.0f, 0.0f, 1.0f,
-	1.0f, 0.0f, 1.0f,
-	1.0f, 0.0f, 1.0f,
-	1.0f, 0.0f, 1.0f,
-	0.0f, 1.0f, 1.0f,
-	0.0f, 1.0f, 1.0f,
-	0.0f, 1.0f, 1.0f,
-	0.0f, 1.0f, 1.0f,
-	0.0f, 1.0f, 1.0f,
-	0.0f, 1.0f, 1.0f,
-	1.0f, 0.0f, 0.0f,
-	1.0f, 0.0f, 0.0f,
-	1.0f, 0.0f, 0.0f,
-	1.0f, 0.0f, 0.0f,
-	1.0f, 0.0f, 0.0f,
-	1.0f, 0.0f, 0.0f,
-	0.0f, 1.0f, 0.0f,
-	0.0f, 1.0f, 0.0f,
-	0.0f, 1.0f, 0.0f,
-	0.0f, 1.0f, 0.0f,
-	0.0f, 1.0f, 0.0f,
-	0.0f, 1.0f, 0.0f,
-	0.0f, 0.0f, 1.0f,
-	0.0f, 0.0f, 1.0f,
-	0.0f, 0.0f, 1.0f,
-	0.0f, 0.0f, 1.0f,
-	0.0f, 0.0f, 1.0f,
-	0.0f, 0.0f, 1.0f,
-	0, 0, 0,
-	0, 0, 0,
-	1, 1, 1,
-    };
-
-    // create3DObject creates and returns a handle to a VAO that can be used later
-    rectangle = create3DObject(GL_TRIANGLES, 13*3, vertex_buffer_data, color_buffer_data, GL_FILL);
-}
-void createCam ()
-{
-    // GL3 accepts only Triangles. Quads are not supported
-    static const GLfloat vertex_buffer_data [] = {
-	-0.1, 0, 0,
-	0.1, 0, 0,
-	0, 0.1, 0,
-    };
-
-    static const GLfloat color_buffer_data [] = {
-	1, 1, 1,
-	1, 1, 1,
-	1, 1, 1,
-    };
-
-    // create3DObject creates and returns a handle to a VAO that can be used later
-    cam = create3DObject(GL_TRIANGLES, 1*3, vertex_buffer_data, color_buffer_data, GL_LINE);
-}
-void createFloor ()
-{
-    // GL3 accepts only Triangles. Quads are not supported
-    static const GLfloat vertex_buffer_data [] = {
-	-2, -1, 2,
-	2, -1, 2,
-	-2, -1, -2,
-	-2, -1, -2,
-	2, -1, 2,
-	2, -1, -2,
-    };
-
-    static const GLfloat color_buffer_data [] = {
-	0.65, 0.165, 0.165,
-	0.65, 0.165, 0.165,
-	0.65, 0.165, 0.165,
-	0.65, 0.165, 0.165,
-	0.65, 0.165, 0.165,
-	0.65, 0.165, 0.165,
-    };
-
-    // create3DObject creates and returns a handle to a VAO that can be used later
-    floor_vao = create3DObject(GL_TRIANGLES, 2*3, vertex_buffer_data, color_buffer_data, GL_FILL);
-}
-
-
 /* Render the scene with openGL */
 /* Edit this function according to your assignment */
 
@@ -219,6 +84,34 @@ void drawBlockObject(VAO * obj, glm::vec3 trans_coord1, int axis, glm::vec3 tran
   draw3DObject(obj);
 }
 
+void checkBlockPosition()
+{
+  float block_x = block_obj.block_coord[0]+2;
+  float block_y = block_obj.block_coord[2]+2;
+  cout << block_x  << " " << block_y << endl;
+  //cout << block_obj.block_coord[0] << " " <<  block_obj.block_coord[2] << " " << goal_state.first - 2 << " " << goal_state.second - 2 << endl;
+  if(block_obj.along_y==1 && block_obj.block_coord[0]==goal_state.first-2 && block_obj.block_coord[2]==goal_state.second-2)
+  {
+    printf("Game Completed successfully\n");
+    exit(0);
+  }
+  else if(block_obj.along_y==1 && arr[ (int )block_obj.block_coord[0] + 2 ][ (int )block_obj.block_coord[2] + 2 ]==0)
+  {
+    printf("Game Over\n");
+    exit(0);
+  }
+  else if(block_obj.along_x==1 && ((arr[(int)(block_x-0.5)][ (int )block_y ]==0 && ((int)(block_x-0.5)!=goal_state.first || (int)block_y!=goal_state.second)) || (arr[(int)(block_x+0.5)][ (int )block_y ]==0 && ((int)(block_x+0.5)!=goal_state.first || (int)block_y!=goal_state.second))))
+  {
+    printf("Game Over\n");
+    exit(0);
+  }
+  else if(block_obj.along_z==1 && ((arr[(int)(block_x)][ (int )(block_y-0.5) ]==0 && ((int)(block_y-0.5)!=goal_state.second || (int)block_x!=goal_state.first)) || (arr[(int)(block_x)][ (int )(block_y + 0.5) ]==0 && ((int)(block_y+0.5)!=goal_state.second || (int)block_x!=goal_state.first))))
+  {
+    printf("Game Over\n");
+    exit(0);
+  }
+}
+
 void draw (GLFWwindow* window, float x, float y, float w, float h, int doM, int doV, int doP)
 {
   int fbwidth, fbheight, i, j;
@@ -239,23 +132,14 @@ void draw (GLFWwindow* window, float x, float y, float w, float h, int doM, int 
     }
   }
   block_obj.drawBlock();
+  checkBlockPosition();
 }
 
 
 void createTiles()
 {
-  int arr[][10] = {
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   //1
-    0, 0, 1, 0, 0, 0, 0, 0, 0, 0,   //2
-    0, 0, 1, 1, 0, 0, 0, 0, 0, 0,   //3
-    0, 0, 1, 1, 1, 1, 0, 0, 0, 0,   //4
-    0, 0, 0, 1, 0, 0, 0, 0, 0, 0,   //5
-    0, 0, 0, 0, 1, 1, 0, 0, 0, 0,   //6
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   //7
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   //8
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   //9
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 1   //10
-  };
+  goal_state.first = 4;
+  goal_state.second = 4;
   int i,j;
   for(i=0; i<10; i++)
   {
