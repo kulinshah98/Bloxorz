@@ -47,7 +47,7 @@ public:
   VAO * tiles_vao;
 
 public:
-  void init(int tiles_type);
+  void init(int tiles_type, int is_active);
   void createTiles();
   void drawTiles();
 };
@@ -79,6 +79,7 @@ glm::vec3 rect_pos, floor_pos;
 float rectangle_rotation = 0;
 double tiles_length = 0.07, tiles_width = 0.07,tiles_height = 0.03;
 float rectangle_rot_dir = 1, angle;
+pair<float, float> prev_pos;
 bool rectangle_rot_status = true;
 VAO *rectangle, *cam, *floor_vao;
 float camera_rotation_angle = 90;
@@ -86,19 +87,20 @@ tiles_class tiles_grid[12][12];
 block_class block_obj;
 int active_s, active_d, active_w, active_a;
 pair<int,int> goal_state;
+pair<int,int> bridge1;
 glm::vec3 prev_block_coord;
 glm::vec3 eye;
 glm::vec3 target;
-int view_type=0;
+int view_type=0,count=0,last_count=0,flag=0;
 int arr[][10] = {
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,   //1
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,   //2
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,   //3
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,   //4
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,   //5
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,   //6
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,   //7
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,   //8
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1,   //9
-  1, 1, 1, 1, 1, 1, 1, 1, 1, 1   //10
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,   //1
+  0, 1, 1, 1, 1, 1, 1, 1, 1, 0,   //2
+  0, 1, 1, 1, 1, 1, 1, 1, 1, 0,   //3
+  0, 1, 1, 2, 1, 2, 1, 1, 1, 0,   //4
+  0, 1, 1, 1, 2, 2, 1, 1, 1, 0,   //5
+  0, 1, 1, 1, 1, 1, 1, 1, 1, 0,   //6
+  0, 1, 1, 1, 1, 1, 1, 1, 1, 0,   //7
+  0, 4, 1, 1, 1, 1, 1, 1, 1, 0,   //8
+  0, 1, 3, 1, 1, 1, 1, 1, 1, 0,   //9
+  0, 0, 0, 0, 0, 0, 0, 0, 0, 0   //10
 };

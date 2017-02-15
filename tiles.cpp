@@ -1,15 +1,19 @@
 #include "tiles.h"
 
-void tiles_class::init(int tiles_type)
+void tiles_class::init(int tiles_type, int is_active)
 {
   type = tiles_type;
-  if(type==0)  //No Tiles
+  if(type==0)  //No Tiles or Bridge Tiles
   {
     active=0;
   }
   else
   {
     active=1;
+  }
+  if(type==3)
+  {
+    active = is_active;
   }
   color = type;
 }
@@ -58,7 +62,7 @@ void tiles_class::createTiles()
  0.5, 0.0, -0.5,
    };
 
-   static const GLfloat color_buffer_data [] = {
+   GLfloat color_buffer_data1 [] = {
  0.4, 0.4, 0.4,
  0.8, 0.8, 0.8,
  0.8, 0.8, 0.8,
@@ -105,7 +109,168 @@ void tiles_class::createTiles()
  0, 0, 0,
  1, 1, 1,
    };
-   tiles_vao = create3DObject(GL_TRIANGLES, 13*3, vertex_buffer_data, color_buffer_data, GL_FILL);
+   GLfloat color_buffer_data2 [] = {
+ 0.9, 0.5, 0.1,
+ 0.7, 0.3, 0,
+ 0.7, 0.3, 0,
+ 0.9, 0.5, 0.1,
+ 0.7, 0.3, 0,
+ 0.7, 0.3, 0,
+
+ 0.9, 0.5, 0.1,
+ 0.7, 0.3, 0,
+ 0.7, 0.3, 0,
+ 0.9, 0.5, 0.1,
+ 0.7, 0.3, 0,
+ 0.7, 0.3, 0,
+
+ 0.9, 0.5, 0.1,
+ 0.7, 0.3, 0,
+ 0.7, 0.3, 0,
+ 0.9, 0.5, 0.1,
+ 0.7, 0.3, 0,
+ 0.7, 0.3, 0,
+
+ 0.9, 0.5, 0.1,
+ 0.7, 0.3, 0,
+ 0.7, 0.3, 0,
+ 0.9, 0.5, 0.1,
+ 0.7, 0.3, 0,
+ 0.7, 0.3, 0,
+
+ 0.9, 0.5, 0.1,
+ 0.7, 0.3, 0,
+ 0.7, 0.3, 0,
+ 0.9, 0.5, 0.1,
+ 0.7, 0.3, 0,
+ 0.7, 0.3, 0,
+
+ 0.9, 0.5, 0.1,
+ 0.7, 0.3, 0,
+ 0.7, 0.3, 0,
+ 0.9, 0.5, 0.1,
+ 0.7, 0.3, 0,
+ 0.7, 0.3, 0,
+
+ 0, 0, 0,
+ 0, 0, 0,
+ 1, 1, 1,
+   };
+   GLfloat color_buffer_data3 [] = {
+      0.2, 0.2, 0.2,
+      0.4, 0.4, 0.4,
+      0.4, 0.4, 0.4,
+      0.2, 0.2, 0.2,
+      0.4, 0.4, 0.4,
+      0.4, 0.4, 0.4,
+
+      0.2, 0.2, 0.2,
+      0.4, 0.4, 0.4,
+      0.4, 0.4, 0.4,
+      0.2, 0.2, 0.2,
+      0.4, 0.4, 0.4,
+      0.4, 0.4, 0.4,
+
+      0.2, 0.2, 0.2,
+      0.4, 0.4, 0.4,
+      0.4, 0.4, 0.4,
+      0.2, 0.2, 0.2,
+      0.4, 0.4, 0.4,
+      0.4, 0.4, 0.4,
+
+      0.2, 0.2, 0.2,
+      0.4, 0.4, 0.4,
+      0.4, 0.4, 0.4,
+      0.2, 0.2, 0.2,
+      0.4, 0.4, 0.4,
+      0.4, 0.4, 0.4,
+
+      0.2, 0.2, 0.2,
+      0.4, 0.4, 0.4,
+      0.4, 0.4, 0.4,
+      0.2, 0.2, 0.2,
+      0.4, 0.4, 0.4,
+      0.4, 0.4, 0.4,
+
+      0.2, 0.2, 0.2,
+      0.4, 0.4, 0.4,
+      0.4, 0.4, 0.4,
+      0.2, 0.2, 0.2,
+      0.4, 0.4, 0.4,
+      0.4, 0.4, 0.4,
+
+ 0, 0, 0,
+ 0, 0, 0,
+ 1, 1, 1,
+   };
+   GLfloat color_buffer_data4 [] = {
+ 0.13, 0.7, 0.4,
+ 0, 0.5, 0.2,
+ 0, 0.5, 0.2,
+ 0.13, 0.7, 0.4,
+ 0, 0.5, 0.2,
+ 0, 0.5, 0.2,
+
+ 0.13, 0.7, 0.4,
+ 0, 0.5, 0.2,
+ 0, 0.5, 0.2,
+ 0.13, 0.7, 0.4,
+ 0, 0.5, 0.2,
+ 0, 0.5, 0.2,
+
+ 0.13, 0.7, 0.4,
+ 0, 0.5, 0.2,
+ 0, 0.5, 0.2,
+ 0.13, 0.7, 0.4,
+ 0, 0.5, 0.2,
+ 0, 0.5, 0.2,
+
+ 0.13, 0.7, 0.4,
+ 0, 0.5, 0.2,
+ 0, 0.5, 0.2,
+ 0.13, 0.7, 0.4,
+ 0, 0.5, 0.2,
+ 0, 0.5, 0.2,
+
+ 0.13, 0.7, 0.4,
+ 0, 0.5, 0.2,
+ 0, 0.5, 0.2,
+ 0.13, 0.7, 0.4,
+ 0, 0.5, 0.2,
+ 0, 0.5, 0.2,
+
+ 0.13, 0.7, 0.4,
+ 0, 0.5, 0.2,
+ 0, 0.5, 0.2,
+ 0.13, 0.7, 0.4,
+ 0, 0.5, 0.2,
+ 0, 0.5, 0.2,
+
+ 0, 0, 0,
+ 0, 0, 0,
+ 1, 1, 1,
+   };
+   if(color==1)
+   {
+    tiles_vao = create3DObject(GL_TRIANGLES, 13*3, vertex_buffer_data, color_buffer_data1, GL_FILL);
+   }
+   else if(color==2)
+   {
+    tiles_vao = create3DObject(GL_TRIANGLES, 13*3, vertex_buffer_data, color_buffer_data2, GL_FILL);
+   }
+   else if(color==3 && active==0)
+   {
+    tiles_vao = create3DObject(GL_TRIANGLES, 13*3, vertex_buffer_data, color_buffer_data3, GL_FILL);
+   }
+   else if(color==3 && active==1)
+   {
+     //printf("New Object\n");
+    tiles_vao = create3DObject(GL_TRIANGLES, 13*3, vertex_buffer_data, color_buffer_data1, GL_FILL);
+   }
+   else if(color==4)
+   {
+     tiles_vao = create3DObject(GL_TRIANGLES, 13*3, vertex_buffer_data, color_buffer_data4, GL_FILL);
+   }
 }
 
 

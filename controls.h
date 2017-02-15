@@ -56,16 +56,18 @@ extern int do_rot, floor_rel;
 extern glm::vec3 rect_pos, floor_pos;
 extern float rectangle_rot_dir, triangle_rot_dir,rectangle_rotation;
 extern bool triangle_rot_status, rectangle_rot_status;
-extern int active_s, active_d, active_w, active_a;
+extern int active_s, active_d, active_w, active_a, flag;
 extern float angle;
 extern block_class block_obj;
 extern glm::vec3 prev_block_coord;
-extern int view_type;
+extern int view_type,count,last_count;
 extern glm::vec3 eye;
 extern glm::vec3 target;
+extern pair<float, float> prev_pos;
 
 //functions
 void keyboard (GLFWwindow* window, int key, int scancode, int action, int mods);
 void keyboardChar (GLFWwindow* window, unsigned int key);
 void mouseButton (GLFWwindow* window, int button, int action, int mods);
 void quit(GLFWwindow *window);
+void mouseHandler(GLFWwindow* window, double xpos, double ypos);

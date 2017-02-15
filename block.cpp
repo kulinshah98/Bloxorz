@@ -44,7 +44,7 @@ void block_class::createBlock()
  0.5, 1, -0.5,
    };
 
-   static const GLfloat color_buffer_data [] = {
+   GLfloat color_buffer_data [] = {
  0.2, 0.5, 0.9,
  0.1, 0.2, 0.5,
  0.1, 0.2, 0.5,

@@ -1,19 +1,11 @@
 #include "main.h"
 
-
-
 /* Render the scene with openGL */
 /* Edit this function according to your assignment */
 
 void drawSingleObject(VAO * obj, glm::vec3 trans_coord, glm::vec3 rot_coord, float rot_angle)
 {
-  //glm::vec3 eye ( 2, 4, -4);
-  //cout << eye << endl;
-  // Target - Where is the camera looking at.  Don't change unless you are sure!!
-  //glm::vec3 target (2, 0, 0);
-  // Up - Up vector defines tilt of camera.  Don't change unless you are sure!!
-//  cout << target[0] << " " << target[1] << " " << target[2] << " " << eye[0] << " " << " " << eye[1] << " " << " " << eye[2] << endl;
-setEyeTarget();
+  setEyeTarget();
   glm::vec3 up (0, 1, 0);
 
   // Compute Camera matrix (view)
@@ -43,14 +35,8 @@ setEyeTarget();
 
 void drawBlockObject(VAO * obj, glm::vec3 trans_coord1, int axis, glm::vec3 trans_coord2, glm::vec3 rot_coord, float rot_angle)
 {
-  //glm::vec3 eye ( 2, 4, -4);
-  //cout << eye << endl;
-  // Target - Where is the camera looking at.  Don't change unless you are sure!!
-  //glm::vec3 target (2, 0, 0);
-  // Up - Up vector defines tilt of camera.  Don't change unless you are sure!!
   setEyeTarget();
   glm::vec3 up (0, 1, 0);
-//  cout << target[0] << " " << target[1] << " " << target[2] << " " << eye[0] << " " << " " << eye[1] << " " << " " << eye[2] << endl;
 
   // Compute Camera matrix (view)
   Matrices.view = glm::lookAt(eye, target, up); // Fixed camera for 2D (ortho) in XY plane
@@ -65,8 +51,6 @@ void drawBlockObject(VAO * obj, glm::vec3 trans_coord1, int axis, glm::vec3 tran
 
   // Load identity to model matrix
   Matrices.model = glm::mat4(1.0f);
-  //printf("%f %f %f\n",trans_coord[0], trans_coord[1], trans_coord[2]);
-  //printf("%d %d %d\n",trans_coord[0], trans_coord[1], trans_coord[2]);
   glm::mat4 rotateRectangle2 = glm::mat4(1.0f);
   if(axis==1)
   {
@@ -92,24 +76,26 @@ void checkBlockPosition()
 {
   float block_x = block_obj.block_coord[0]+2;
   float block_y = block_obj.block_coord[2]+2;
-//  cout << block_x  << " " << block_y << endl;
-  //cout << block_obj.block_coord[0] << " " <<  block_obj.block_coord[2] << " " << goal_state.first - 2 << " " << goal_state.second - 2 << endl;
-  if(block_obj.along_y==1 && block_obj.block_coord[0]==goal_state.first-2 && block_obj.block_coord[2]==goal_state.second-2)
+  if( (block_obj.along_y==1 && arr[(int )block_x][(int )block_y]==4 && count!=last_count && count!=last_count+1) ||
+      (block_obj.along_x==1 && (arr[int(block_x - 0.5)][int(block_y)]==4 || arr[int(block_x+0.5)][int(block_y)] == 4) && last_count!=count && last_count+1!=count) ||
+     (block_obj.along_z==1 && (arr[int(block_x)][int(block_y - 0.5)]==4 || arr[int(block_x)][int(block_y+0.5)] == 4) && last_count!=count && last_count+1!=count))
+  {
+    tiles_class temp;
+    cout << tiles_grid[bridge1.F][bridge1.S].active << endl;
+    temp.init(arr[bridge1.F][bridge1.S],1 - tiles_grid[bridge1.F][bridge1.S].active);
+    temp.createTiles();
+    tiles_grid[bridge1.F][bridge1.S] = temp;
+    tiles_grid[bridge1.F][bridge1.S].tiles_coord = glm::vec3(bridge1.F-2, 0, bridge1.S-2);
+    last_count=count;
+  }
+  if(block_obj.along_y==1 && block_obj.block_coord[0]==goal_state.F-2 && block_obj.block_coord[2]==goal_state.S-2)
   {
     printf("Game Completed successfully\n");
     exit(0);
   }
-  else if(block_obj.along_y==1 && arr[ (int )block_obj.block_coord[0] + 2 ][ (int )block_obj.block_coord[2] + 2 ]==0)
-  {
-    printf("Game Over\n");
-    exit(0);
-  }
-  else if(block_obj.along_x==1 && ((arr[(int)(block_x-0.5)][ (int )block_y ]==0 && ((int)(block_x-0.5)!=goal_state.first || (int)block_y!=goal_state.second)) || (arr[(int)(block_x+0.5)][ (int )block_y ]==0 && ((int)(block_x+0.5)!=goal_state.first || (int)block_y!=goal_state.second))))
-  {
-    printf("Game Over\n");
-    exit(0);
-  }
-  else if(block_obj.along_z==1 && ((arr[(int)(block_x)][ (int )(block_y-0.5) ]==0 && ((int)(block_y-0.5)!=goal_state.second || (int)block_x!=goal_state.first)) || (arr[(int)(block_x)][ (int )(block_y + 0.5) ]==0 && ((int)(block_y+0.5)!=goal_state.second || (int)block_x!=goal_state.first))))
+  else if((block_obj.along_y==1 && (arr[ int(block_x) ][ (int )block_y ]==0 || arr[ int(block_x) ][ int(block_y) ]==2 || (arr[int(block_x)][int(block_y)]==3 && tiles_grid[int(block_x)][int(block_y)].active==0) )) ||
+          (block_obj.along_x==1 && ((arr[int(block_x-0.5)][int(block_y)]==3 && tiles_grid[int(block_x-0.5)][int(block_y)].active==0) || (arr[int(block_x+0.5)][int(block_y)]==3 && tiles_grid[int(block_x+0.5)][int(block_y)].active==0) || (arr[int(block_x-0.5)][ (int )block_y ]==0 && (int(block_x-0.5)!=goal_state.F || int(block_y)!=goal_state.S)) || (arr[int(block_x+0.5)][ int(block_y) ]==0 && ((int)(block_x+0.5)!=goal_state.F || (int)block_y!=goal_state.S)))) ||
+          (block_obj.along_z==1 && ((arr[int(block_x)][int(block_y-0.5)]==3 && tiles_grid[int(block_x)][int(block_y-0.5)].active==0) || (arr[int(block_x)][int(block_y+0.5)]==3 && tiles_grid[int(block_x)][int(block_y+0.5)].active==0) || (arr[(int)(block_x)][ (int )(block_y-0.5) ]==0 && ((int)(block_y-0.5)!=goal_state.S || (int)block_x!=goal_state.F)) || (arr[(int)(block_x)][ (int )(block_y + 0.5) ]==0 && ((int)(block_y+0.5)!=goal_state.S || (int)block_x!=goal_state.F)))))
   {
     printf("Game Over\n");
     exit(0);
@@ -160,13 +146,9 @@ void setEyeTarget()
     }
     else if(block_obj.along_z==1)
     {
-      eye = glm::vec3(block_obj.block_coord[0] , block_obj.block_coord[1] + 2.2, block_obj.block_coord[2]);
+      eye = glm::vec3(block_obj.block_coord[0] , block_obj.block_coord[1] + 2.2, block_obj.block_coord[2] - 1);
       target = glm::vec3(block_obj.block_coord[0], block_obj.block_coord[1] + 0.7, block_obj.block_coord[2]);
     }
-  }
-  else if(view_type==4)
-  {
-    
   }
 }
 
@@ -183,12 +165,12 @@ void draw (GLFWwindow* window, float x, float y, float w, float h, int doM, int 
   {
     for(j=0;j<10;j++)
     {
-      if(tiles_grid[i][j].active==1)
-      {
-        tiles_grid[i][j].drawTiles();
+        if(tiles_grid[i][j].type!=0)
+        {
+          tiles_grid[i][j].drawTiles();
+        }
       }
     }
-  }
   block_obj.drawBlock();
   checkBlockPosition();
 }
@@ -196,23 +178,19 @@ void draw (GLFWwindow* window, float x, float y, float w, float h, int doM, int 
 
 void createTiles()
 {
-  goal_state.first = 4;
-  goal_state.second = 4;
+  goal_state.F = 4;
+  goal_state.S = 4;
+  bridge1.F = 8;
+  bridge1.S = 2;
   int i,j;
   for(i=0; i<10; i++)
   {
     for(j=0; j<10; j++)
     {
       tiles_class temp;
-      temp.init(arr[i][j]);
+      temp.init(arr[i][j],0);
       temp.createTiles();
       tiles_grid[i][j] = temp;
-    }
-  }
-  for(i=0;i<10;i++)
-  {
-    for(j=0;j<10;j++)
-    {
       tiles_grid[i][j].tiles_coord = glm::vec3(i-2, 0, j-2);
     }
   }
@@ -262,36 +240,19 @@ int main (int argc, char** argv)
 	initGL (window, width, height);
 
     double last_update_time = glfwGetTime();
-
     /* Draw in loop */
     while (!glfwWindowShouldClose(window)) {
 
       glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         // OpenGL Draw commands
         current_time = glfwGetTime();
-        if(do_rot)
-        {
-        //  printf("do_rot=1\n");
-          camera_rotation_angle += 90*(current_time - last_update_time); // Simulating camera rotation
-          //cout << camera_rotation_angle << " " << current_time << " " << last_update_time << endl;
-        }
-      	if(camera_rotation_angle > 720)
-        {
-          camera_rotation_angle -= 720;
-        }
       	last_update_time = current_time;
       	draw(window, 0, 0, 1, 1, 1, 1, 1);
-        //draw(window, 0.5, 0, 0.5, 0.5, 0, 1, 1);
-      	//draw(window, 0, 0.5, 0.5, 0.5, 1, 0, 1);
-      	//draw(window, 0.5, 0.5, 0.5, 0.5, 0, 0, 1);
-
         // Swap Frame Buffer in double buffering
         glfwSwapBuffers(window);
 
         // Poll for Keyboard and mouse events
         glfwPollEvents();
-
-        // Control based on time (Time based transformation like 5 degrees rotation every 0.5s)
     }
 
     glfwTerminate();

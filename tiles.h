@@ -45,7 +45,7 @@ public:
   VAO * tiles_vao;
 
 public:
-  void init(int tiles_type);
+  void init(int tiles_type, int is_active);
   void createTiles();
   void drawTiles();
 };
@@ -57,5 +57,5 @@ extern double tiles_width, tiles_length, tiles_height;
 
 //functions
 void draw3DObject (struct VAO* vao);
-struct VAO* create3DObject (GLenum primitive_mode, int numVertices, const GLfloat* vertex_buffer_data, const GLfloat* color_buffer_data, GLenum fill_mode);
+struct VAO* create3DObject (GLenum primitive_mode, int numVertices, const GLfloat* vertex_buffer_data, GLfloat* color_buffer_data, GLenum fill_mode);
 void drawSingleObject(VAO * obj, glm::vec3 trans_coord, glm::vec3 rot_coord, float rot_angle);

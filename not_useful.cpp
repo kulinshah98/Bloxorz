@@ -47,6 +47,8 @@ GLFWwindow* initGLFW (int width, int height)
     /* Register function to handle keyboard input */
     glfwSetKeyCallback(window, keyboard);      // general keyboard input
     glfwSetCharCallback(window, keyboardChar);  // simpler specific character handling
+    glfwSetCursorPosCallback(window, mouseHandler);
+    glfwSetScrollCallback(window, scrollHandler);
 
     /* Register function to handle mouse click */
     glfwSetMouseButtonCallback(window, mouseButton);  // mouse button clicks
@@ -171,7 +173,7 @@ void quit(GLFWwindow *window)
 
 
 /* Generate VAO, VBOs and return VAO handle */
-struct VAO* create3DObject (GLenum primitive_mode, int numVertices, const GLfloat* vertex_buffer_data, const GLfloat* color_buffer_data, GLenum fill_mode=GL_FILL)
+struct VAO* create3DObject (GLenum primitive_mode, int numVertices, const GLfloat* vertex_buffer_data, GLfloat* color_buffer_data, GLenum fill_mode=GL_FILL)
 {
     struct VAO* vao = new struct VAO;
     vao->PrimitiveMode = primitive_mode;

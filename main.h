@@ -34,6 +34,8 @@ struct GLMatrices {
 extern GLMatrices Matrices;
 
 
+#define F first
+#define S second
 
 #ifndef TILES_H
 #define TILES_H
@@ -46,7 +48,7 @@ public:
   VAO * tiles_vao;
 
 public:
-  void init(int tiles_type);
+  void init(int tiles_type, int is_active);
   void createTiles();
   void drawTiles();
 };
@@ -83,13 +85,15 @@ extern VAO *rectangle, *cam, *floor_vao;
 extern tiles_class tiles_grid[12][12];
 extern float camera_rotation_angle;
 extern block_class block_obj;
-extern int active_s, active_d, active_w, active_a;
+extern int active_s, active_d, active_w, active_a,count,last_count, flag;
 extern float angle;
-extern pair<int,int> goal_state;
+extern pair<int,int> goal_state, bridge1;
+extern pair<float, float> prev_pos;
 extern int arr[10][10];
 extern glm::vec3 eye;
 extern glm::vec3 target;
 extern int view_type;
+
 
 //functions
 void createRectangle ();
@@ -98,7 +102,7 @@ void createFloor ();
 void drawSingleObject(VAO * obj, glm::vec3 trans_coord, glm::vec3 rot_coord, float rot_angle);
 void draw (GLFWwindow* window, float x, float y, float w, float h, int doM, int doV, int doP);
 void initGL (GLFWwindow* window, int width, int height);
-struct VAO* create3DObject (GLenum primitive_mode, int numVertices, const GLfloat* vertex_buffer_data, const GLfloat* color_buffer_data, GLenum fill_mode);
+struct VAO* create3DObject (GLenum primitive_mode, int numVertices, const GLfloat* vertex_buffer_data, GLfloat* color_buffer_data, GLenum fill_mode);
 void draw3DObject (struct VAO* vao);
 GLFWwindow* initGLFW (int width, int height);
 GLuint LoadShaders(const char * vertex_file_path,const char * fragment_file_path);

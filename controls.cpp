@@ -44,6 +44,7 @@ void keyboardChar (GLFWwindow* window, unsigned int key)
     case 'a':
       if(active_d==0 && active_w==0 && active_s==0)
       {
+        count++;
         active_a=1;
         printf("****\n");
          prev_block_coord=block_obj.block_coord;
@@ -56,6 +57,7 @@ void keyboardChar (GLFWwindow* window, unsigned int key)
     case 'd':
       if(active_a==0 && active_w==0 && active_s==0)
       {
+        count++;
          prev_block_coord=block_obj.block_coord;
         active_d=1;
         if(angle==90)
@@ -67,6 +69,7 @@ void keyboardChar (GLFWwindow* window, unsigned int key)
     case 'w':
       if(active_d==0 && active_a==0 && active_s==0)
       {
+        count++;
          prev_block_coord=block_obj.block_coord;
         active_w=1;
         if(angle==90)
@@ -78,6 +81,7 @@ void keyboardChar (GLFWwindow* window, unsigned int key)
     case 's':
       if(active_d==0 && active_w==0 && active_a==0)
       {
+        count++;
          prev_block_coord=block_obj.block_coord;
         active_s=1;
         if(angle==90)
@@ -109,31 +113,7 @@ void keyboardChar (GLFWwindow* window, unsigned int key)
       target = glm::vec3(2,0,0);
       view_type = 4;
       break;
-    case 'i':
-      if(view_type==4)
-      {
-        target[1]+=0.5;
-      }
-      break;
-    case 'j':
-      if(view_type==4)
-      {
-        target[0]+=0.5;
-      }
-      break;
-    case 'k':
-      if(view_type==4)
-      {
-        target[1]-=0.5;
-      }
-      break;
-    case 'l':
-      if(view_type==4)
-      {
-        target[0]-=0.5;
-      }
-      break;
-		default:
+    default:
 			break;
 	}
 }
@@ -142,12 +122,35 @@ void keyboardChar (GLFWwindow* window, unsigned int key)
 void mouseButton (GLFWwindow* window, int button, int action, int mods)
 {
     switch (button) {
-        case GLFW_MOUSE_BUTTON_RIGHT:
-            if (action == GLFW_RELEASE) {
-                rectangle_rot_dir *= -1;
+        case GLFW_MOUSE_BUTTON_LEFT:
+            if (action == GLFW_PRESS) {
+                flag=1;
+                double x,y;
+                glfwGetCursorPos(window, &x, &y);
+                prev_pos.first = float(x);
+                prev_pos.second = float(y);
+            }
+            else if(action == GLFW_RELEASE) {
+              flag=0;
             }
             break;
         default:
             break;
     }
+}
+
+void scrollHandler(GLFWwindow* window, double xpos, double ypos)
+{
+  cout << xpos << " " << ypos << endl;
+  eye[1]=eye[1] + ypos*0.5;
+  eye[2]=eye[2] - ypos*0.5;
+  //cout << eye[1] << endl;
+}
+
+void mouseHandler(GLFWwindow* window, double xpos, double ypos)
+{
+  if(view_type==4 && flag==1)
+  {
+    eye = glm::vec3(eye[0] +( eye[0] - xpos)/100, eye[1] +( eye[1] - ypos)/100, eye[2]);
+  }
 }
