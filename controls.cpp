@@ -161,11 +161,12 @@ void scrollHandler(GLFWwindow* window, double xpos, double ypos)
 
 void mouseHandler(GLFWwindow* window, double xpos, double ypos)
 {
-  cout << prev_pos.first << " " << prev_pos.second << "------" << endl;
+  double posx, posy;
   //cout << xpos << " " << ypos << " ----- " << endl;
-  cout << eye[0] +( prev_pos.first - xpos)/1000 << " " << eye[1] +( prev_pos.second - ypos)/1000 << endl;
-  if(view_type==4 && flag==1)
-  {
-    eye = glm::vec3(eye[0] +( prev_pos.first - xpos)/100, eye[1] +( prev_pos.second - ypos)/100, eye[2]);
-  }
+  glfwGetCursorPos(window, &posx, &posy);
+    posx -= 500;
+    posy -= 350;
+    posx = posx*1.0/500.0;
+    posy = -posy*1.0/350.0;
+    target += glm::vec3(0.02*posx,-0.02*posy,0);
 }
