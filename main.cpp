@@ -76,26 +76,43 @@ void checkBlockPosition()
 {
   float block_x = block_obj.block_coord[0]+2;
   float block_y = block_obj.block_coord[2]+2;
-  if( (block_obj.along_y==1 && arr[(int )block_x][(int )block_y]==4 && count!=last_count && count!=last_count+1) ||
-      (block_obj.along_x==1 && (arr[int(block_x - 0.5)][int(block_y)]==4 || arr[int(block_x+0.5)][int(block_y)] == 4) && last_count!=count && last_count+1!=count) ||
-     (block_obj.along_z==1 && (arr[int(block_x)][int(block_y - 0.5)]==4 || arr[int(block_x)][int(block_y+0.5)] == 4) && last_count!=count && last_count+1!=count))
+  if( (block_obj.along_y==1 && tiles_grid[(int )block_x][(int )block_y].type==4 && count!=last_count && count!=last_count+1) ||
+      (block_obj.along_x==1 && (tiles_grid[int(block_x - 0.5)][int(block_y)].type==4 || tiles_grid[int(block_x+0.5)][int(block_y)].type == 4) && last_count!=count && last_count+1!=count) ||
+     (block_obj.along_z==1 && (tiles_grid[int(block_x)][int(block_y - 0.5)].type==4 || tiles_grid[int(block_x)][int(block_y+0.5)].type == 4) && last_count!=count && last_count+1!=count))
   {
     tiles_class temp;
     cout << tiles_grid[bridge1.F][bridge1.S].active << endl;
-    temp.init(arr[bridge1.F][bridge1.S],1 - tiles_grid[bridge1.F][bridge1.S].active);
+    temp.init(tiles_grid[bridge1.F][bridge1.S].type,1 - tiles_grid[bridge1.F][bridge1.S].active);
     temp.createTiles();
     tiles_grid[bridge1.F][bridge1.S] = temp;
     tiles_grid[bridge1.F][bridge1.S].tiles_coord = glm::vec3(bridge1.F-2, 0, bridge1.S-2);
     last_count=count;
   }
+  // cout << block_obj.block_coord[0] << " " << block_obj.block_coord[2] << " " << goal_state.F << " " << goal_state.S << endl;
   if(block_obj.along_y==1 && block_obj.block_coord[0]==goal_state.F-2 && block_obj.block_coord[2]==goal_state.S-2)
   {
-    printf("Game Completed successfully\n");
-    exit(0);
+    if(level==3)
+    {
+      printf("Game Completed successfully\n");
+      exit(0);
+    }
+    else
+    {
+      level++;
+      printf("****LEVEL CHANGE****\n");
+      if(level==2)
+      {
+        createTiles2();
+      }
+      else
+      {
+        createTiles3();
+      }
+    }
   }
-  else if((block_obj.along_y==1 && (arr[ int(block_x) ][ (int )block_y ]==0 || arr[ int(block_x) ][ int(block_y) ]==2 || (arr[int(block_x)][int(block_y)]==3 && tiles_grid[int(block_x)][int(block_y)].active==0) )) ||
-          (block_obj.along_x==1 && ((arr[int(block_x-0.5)][int(block_y)]==3 && tiles_grid[int(block_x-0.5)][int(block_y)].active==0) || (arr[int(block_x+0.5)][int(block_y)]==3 && tiles_grid[int(block_x+0.5)][int(block_y)].active==0) || (arr[int(block_x-0.5)][ (int )block_y ]==0 && (int(block_x-0.5)!=goal_state.F || int(block_y)!=goal_state.S)) || (arr[int(block_x+0.5)][ int(block_y) ]==0 && ((int)(block_x+0.5)!=goal_state.F || (int)block_y!=goal_state.S)))) ||
-          (block_obj.along_z==1 && ((arr[int(block_x)][int(block_y-0.5)]==3 && tiles_grid[int(block_x)][int(block_y-0.5)].active==0) || (arr[int(block_x)][int(block_y+0.5)]==3 && tiles_grid[int(block_x)][int(block_y+0.5)].active==0) || (arr[(int)(block_x)][ (int )(block_y-0.5) ]==0 && ((int)(block_y-0.5)!=goal_state.S || (int)block_x!=goal_state.F)) || (arr[(int)(block_x)][ (int )(block_y + 0.5) ]==0 && ((int)(block_y+0.5)!=goal_state.S || (int)block_x!=goal_state.F)))))
+  else if((block_obj.along_y==1 && (tiles_grid[ int(block_x) ][ (int )block_y ].type==0 || tiles_grid[ int(block_x) ][ int(block_y) ].type==2 || (tiles_grid[int(block_x)][int(block_y)].type==3 && tiles_grid[int(block_x)][int(block_y)].active==0) )) ||
+          (block_obj.along_x==1 && ((tiles_grid[int(block_x-0.5)][int(block_y)].type==3 && tiles_grid[int(block_x-0.5)][int(block_y)].active==0) || (tiles_grid[int(block_x+0.5)][int(block_y)].type==3 && tiles_grid[int(block_x+0.5)][int(block_y)].active==0) || (tiles_grid[int(block_x-0.5)][ (int )block_y ].type==0 && (int(block_x-0.5)!=goal_state.F || int(block_y)!=goal_state.S)) || (tiles_grid[int(block_x+0.5)][ int(block_y) ].type==0 && ((int)(block_x+0.5)!=goal_state.F || (int)block_y!=goal_state.S)))) ||
+          (block_obj.along_z==1 && ((tiles_grid[int(block_x)][int(block_y-0.5)].type==3 && tiles_grid[int(block_x)][int(block_y-0.5)].active==0) || (tiles_grid[int(block_x)][int(block_y+0.5)].type==3 && tiles_grid[int(block_x)][int(block_y+0.5)].active==0) || (tiles_grid[(int)(block_x)][ (int )(block_y-0.5) ].type==0 && ((int)(block_y-0.5)!=goal_state.S || (int)block_x!=goal_state.F)) || (tiles_grid[(int)(block_x)][ (int )(block_y + 0.5) ].type==0 && ((int)(block_y+0.5)!=goal_state.S || (int)block_x!=goal_state.F)))))
   {
     printf("Game Over\n");
     exit(0);
@@ -176,19 +193,19 @@ void draw (GLFWwindow* window, float x, float y, float w, float h, int doM, int 
 }
 
 
-void createTiles()
+void createTiles1()
 {
-  goal_state.F = 4;
-  goal_state.S = 4;
-  bridge1.F = 8;
-  bridge1.S = 2;
+  goal_state.F = 1;
+  goal_state.S = 6;
+  bridge1.F = 5;
+  bridge1.S = 4;
   int i,j;
   for(i=0; i<10; i++)
   {
     for(j=0; j<10; j++)
     {
       tiles_class temp;
-      temp.init(arr[i][j],0);
+      temp.init(arr1[i][j],0);
       temp.createTiles();
       tiles_grid[i][j] = temp;
       tiles_grid[i][j].tiles_coord = glm::vec3(i-2, 0, j-2);
@@ -196,13 +213,55 @@ void createTiles()
   }
 }
 
+void createTiles2()
+{
+  goal_state.F = 7;
+  goal_state.S = 7;
+  bridge1.F = 5;
+  bridge1.S = 4;
+  int i,j;
+  for(i=0; i<10; i++)
+  {
+    for(j=0; j<10; j++)
+    {
+      tiles_class temp;
+      temp.init(arr2[i][j],0);
+      temp.createTiles();
+      tiles_grid[i][j] = temp;
+      tiles_grid[i][j].tiles_coord = glm::vec3(i-2, 0, j-2);
+    }
+  }
+  block_obj.block_coord = glm::vec3(6,1,1);
+}
+
+void createTiles3()
+{
+  goal_state.F = 7;
+  goal_state.S = 6;
+  bridge1.F = 5;
+  bridge1.S = 4;
+  int i,j;
+  for(i=0; i<10; i++)
+  {
+    for(j=0; j<10; j++)
+    {
+      tiles_class temp;
+      temp.init(arr3[i][j],0);
+      temp.createTiles();
+      tiles_grid[i][j] = temp;
+      tiles_grid[i][j].tiles_coord = glm::vec3(i-2, 0, j-2);
+    }
+  }
+  block_obj.block_coord = glm::vec3(6,1,1);
+}
+
 void initGL (GLFWwindow* window, int width, int height)
 {
     /* Objects should be created before any other gl function and shaders */
 	// Create the models
-	createTiles();
+	createTiles1();
   block_obj.createBlock();
-  block_obj.block_coord = glm::vec3(1,1,0);
+  block_obj.block_coord = glm::vec3(4,1,3);
   block_obj.along_y = 1;
   //createRectangle();
 	// Create and compile our GLSL program from the shaders
@@ -214,7 +273,7 @@ void initGL (GLFWwindow* window, int width, int height)
 	reshapeWindow (window, width, height);
 
     // Background color of the scene
-	glClearColor (0.3f, 0.3f, 0.3f, 0.0f); // R, G, B, A
+	glClearColor (0.41f, 0.71f, 0.61f, 1.0f); // R, G, B, A
 	glClearDepth (1.0f);
 
 	glEnable (GL_DEPTH_TEST);
@@ -233,6 +292,13 @@ int main (int argc, char** argv)
   rect_pos = glm::vec3(0, 0, 0);
   floor_pos = glm::vec3(0, 0, 0);
   active_s = active_w = active_a = active_d=0;
+  ISoundEngine* engine = createIrrKlangDevice();
+  //ISound* music = engine->play3D("../../media/ophelia.mp3",
+    //                           vec3df(0,0,0), true, false, true);
+
+                               //if (music)
+                             	//	music->setMinDistance(5.0f);
+	engine->play2D("irrKlang-64bit-1.5.0/media/getout.ogg", true);
   do_rot = 0;
   floor_rel = 1;
     GLFWwindow* window = initGLFW(width, height);
@@ -256,5 +322,6 @@ int main (int argc, char** argv)
     }
 
     glfwTerminate();
+    engine->drop();
 //    exit(EXIT_SUCCESS);
 }

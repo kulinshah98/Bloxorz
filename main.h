@@ -5,6 +5,7 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <irrKlang.h>
 
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
@@ -12,6 +13,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 using namespace std;
+using namespace irrklang;
 
 //variables
 struct VAO {
@@ -85,11 +87,11 @@ extern VAO *rectangle, *cam, *floor_vao;
 extern tiles_class tiles_grid[12][12];
 extern float camera_rotation_angle;
 extern block_class block_obj;
-extern int active_s, active_d, active_w, active_a,count,last_count, flag;
+extern int active_s, active_d, active_w, active_a,count,last_count, flag, level;
 extern float angle;
 extern pair<int,int> goal_state, bridge1;
 extern pair<float, float> prev_pos;
-extern int arr[10][10];
+extern int arr1[10][10], arr2[10][10], arr3[10][10];
 extern glm::vec3 eye;
 extern glm::vec3 target;
 extern int view_type;
@@ -110,3 +112,6 @@ void reshapeWindow (GLFWwindow* window, int width, int height);
 void drawBlockObject(VAO * obj, glm::vec3 trans_coord1, int axis, glm::vec3 trans_coord2, glm::vec3 rot_coord, float rot_angle);
 void checkBlockPosition();
 void setEyeTarget();
+void createTiles1();
+void createTiles2();
+void createTiles3();

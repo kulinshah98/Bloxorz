@@ -113,6 +113,18 @@ void keyboardChar (GLFWwindow* window, unsigned int key)
       target = glm::vec3(2,0,0);
       view_type = 4;
       break;
+    case 'i':
+      target[1]+=0.2;
+      break;
+    case 'j':
+      target[0]-=0.2;
+      break;
+    case 'k':
+      target[1]-=0.2;
+      break;
+    case 'l':
+      target[0]+=0.2;
+      break;
     default:
 			break;
 	}
@@ -149,8 +161,11 @@ void scrollHandler(GLFWwindow* window, double xpos, double ypos)
 
 void mouseHandler(GLFWwindow* window, double xpos, double ypos)
 {
+  cout << prev_pos.first << " " << prev_pos.second << "------" << endl;
+  //cout << xpos << " " << ypos << " ----- " << endl;
+  cout << eye[0] +( prev_pos.first - xpos)/1000 << " " << eye[1] +( prev_pos.second - ypos)/1000 << endl;
   if(view_type==4 && flag==1)
   {
-    eye = glm::vec3(eye[0] +( eye[0] - xpos)/100, eye[1] +( eye[1] - ypos)/100, eye[2]);
+    eye = glm::vec3(eye[0] +( prev_pos.first - xpos)/100, eye[1] +( prev_pos.second - ypos)/100, eye[2]);
   }
 }
