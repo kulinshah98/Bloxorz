@@ -21,8 +21,7 @@ void drawSingleObject(VAO * obj, glm::vec3 trans_coord, glm::vec3 rot_coord, flo
 
   // Load identity to model matrix
   Matrices.model = glm::mat4(1.0f);
-  //printf("%f %f %f\n",trans_coord[0], trans_coord[1], trans_coord[2]);
-  //printf("%d %d %d\n",trans_coord[0], trans_coord[1], trans_coord[2]);
+
   glm::mat4 translateRectangle = glm::translate (trans_coord);        // glTranslatef
   glm::mat4 rotateRectangle = glm::rotate((float )(rot_angle*M_PI/180.0f), rot_coord);
   glm::mat4 transformRectangle = translateRectangle * rotateRectangle;

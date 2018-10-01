@@ -11007,4 +11007,3 @@ int gladLoadGLES1Loader(GLADloadproc load) {
 	load_GL_QCOM_tiled_rendering(load);
 	return GLVersion.major != 0 || GLVersion.minor != 0;
 }
-

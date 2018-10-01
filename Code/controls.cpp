@@ -34,7 +34,7 @@ void keyboard (GLFWwindow* window, int key, int scancode, int action, int mods)
 /* Executed for character input (like in text boxes) */
 void keyboardChar (GLFWwindow* window, unsigned int key)
 {
-//  printf("%c %d %d %d %d\n",key,active_a, active_d, active_w, active_s);
+
 	switch (key) {
 		case 'Q':
 		case 'q':
@@ -156,13 +156,12 @@ void scrollHandler(GLFWwindow* window, double xpos, double ypos)
   cout << xpos << " " << ypos << endl;
   eye[1]=eye[1] + ypos*0.5;
   eye[2]=eye[2] - ypos*0.5;
-  //cout << eye[1] << endl;
 }
 
 void mouseHandler(GLFWwindow* window, double xpos, double ypos)
 {
   double posx, posy;
-  //cout << xpos << " " << ypos << " ----- " << endl;
+
   glfwGetCursorPos(window, &posx, &posy);
     posx -= 500;
     posy -= 350;
